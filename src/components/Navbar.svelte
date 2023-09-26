@@ -6,7 +6,7 @@
 <nav class="py-10 flex justify-between items-center">
   <h2 class="text-lg lg:text-xl">NASA APOD</h2>
 
-  <ul class="flex gap-10">
+  <ul class="flex gap-10 items-center">
     <Navlink text="Accueil" url="{base}/" />
     <Navlink text="Connexion" url="{base}/sign-in" />
     <li>

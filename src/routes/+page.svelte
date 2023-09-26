@@ -23,7 +23,7 @@
   {:then results}
     <ul class="grid grid-cols-3">
       {#each results as apod}
-        <APOD {apod} />
+        <li><APOD {apod} /></li>
       {/each}
     </ul>
   {/await}

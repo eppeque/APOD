@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Apod } from "$lib/apod";
   import Button from "./Button.svelte";
+  import Link from "./Link.svelte";
 
   export let apod: Apod;
   let showDetails = false;
@@ -17,11 +18,15 @@
     class="py-4"
     src={apod.media_type === "image"
       ? apod.url
-      : `https://img.youtube.com/vi/${groups[1]}/default.jpg`}
+      : `https://img.youtube.com/vi/${groups[1]}/hqdefault.jpg`}
     alt={apod.title}
   />
+  {#if apod.media_type === "video"}
+    <Link url="https://youtube.com/watch?v={groups[1]}" />
+    <div class="h-4" />
+  {/if}
   <Button
-    text={showDetails ? "Voir moins" : "Voir plus"}
+    text={showDetails ? "See less" : "See more"}
     on:click={() => (showDetails = !showDetails)}
   />
 
