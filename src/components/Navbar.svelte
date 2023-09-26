@@ -11,8 +11,8 @@
     <Navlink text="Connexion" url="{base}/sign-in" />
     <li>
       <a
-        href="/sign-up"
-        class="py-2 px-4 bg-gradient-to-r from-red-500 to-blue-500 text-white rounded-md"
+        href="{base}/sign-up"
+        class="py-2 px-4 bg-gradient-to-r from-red-500 to-blue-500 text-white rounded-md hover:from-red-600 hover:to-blue-600"
         >S'inscrire</a
       >
     </li>

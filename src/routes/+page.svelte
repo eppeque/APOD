@@ -3,6 +3,7 @@
   import Spinner from "../components/Spinner.svelte";
   import { fetchLatestApods, type Apod } from "$lib/apod";
   import { onMount } from "svelte";
+  import APOD from "../components/APOD.svelte";
 
   let apods: Promise<Apod[]>;
 
@@ -20,8 +21,10 @@
   {#await apods}
     <Spinner />
   {:then results}
-    {#each results as result}
-      <li>{result.title}</li>
-    {/each}
+    <ul class="grid grid-cols-3">
+      {#each results as apod}
+        <APOD {apod} />
+      {/each}
+    </ul>
   {/await}
 {/if}
