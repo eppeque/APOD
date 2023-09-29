@@ -7,13 +7,13 @@
   <h2 class="text-lg lg:text-xl">NASA APOD</h2>
 
   <ul class="flex gap-10 items-center">
-    <Navlink text="Accueil" url="{base}/" />
-    <Navlink text="Connexion" url="{base}/sign-in" />
+    <Navlink text="Home" url="{base}/" />
+    <Navlink text="Sign In" url="{base}/sign-in" />
     <li>
       <a
         href="{base}/sign-up"
         class="py-2 px-4 bg-gradient-to-r from-red-500 to-blue-500 text-white rounded-md hover:from-red-600 hover:to-blue-600"
-        >S'inscrire</a
+        >Sign Up</a
       >
     </li>
   </ul>
