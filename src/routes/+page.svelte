@@ -19,7 +19,9 @@
 <Title text="Dernières APODs" />
 {#if apods}
   {#await apods}
-    <Spinner />
+    <div class="w-full py-2 flex justify-center items-center">
+      <Spinner />
+    </div>
   {:then results}
     <ul class="grid grid-cols-3">
       {#each results as apod}
