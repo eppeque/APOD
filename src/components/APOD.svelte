@@ -6,35 +6,38 @@
   export let apod: Apod;
   let showDetails = false;
 
-  const formattedDate = new Date(apod.date);
-  const ytbRegex = /^https:\/\/www\.youtube\.com\/embed\/([a-zA-Z0-9]{11}).*$/;
-  const groups = ytbRegex.exec(apod.url)!;
+  $: formattedDate = new Date(apod.date);
 </script>
 
-<div class="p-10 m-4 shadow-xl rounded-lg h-fit">
+<div class="p-10 m-4 shadow-xl rounded-lg w-full">
   <h2 class="text-3xl py-2">{apod.title}</h2>
-  <p class="text-lg py-2">{formattedDate.toLocaleDateString()}</p>
-  <img
-    class="py-4"
-    src={apod.media_type === "image"
-      ? apod.url
-      : `https://img.youtube.com/vi/${groups[1]}/hqdefault.jpg`}
-    alt={apod.title}
-  />
-  {#if apod.media_type === "video"}
-    <Link url="https://youtube.com/watch?v={groups[1]}" />
-    <div class="h-4" />
-  {/if}
+  <p class="text-lg py-2">{formattedDate.toDateString()}</p>
   <Button
-    text={showDetails ? "See less" : "See more"}
+    text={showDetails ? "Hide details" : "Show details"}
     on:click={() => (showDetails = !showDetails)}
   />
-
   {#if showDetails}
     <p
       class="text-lg my-4 p-3 rounded-md bg-gradient-to-b from-blue-200 to-red-200"
     >
       {apod.explanation}
     </p>
+  {/if}
+
+  {#if apod.media_type === "image"}
+    <img
+      class="py-4 mx-auto max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl"
+      src={apod.url}
+      alt={apod.title}
+    />
+  {:else}
+    <iframe
+      src={apod.url}
+      class="py-4 mx-auto w-full"
+      title="YouTube video player"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen
+    />
   {/if}
 </div>

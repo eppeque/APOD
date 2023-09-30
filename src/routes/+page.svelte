@@ -4,29 +4,45 @@
   import { fetchLatestApods, type Apod } from "$lib/apod";
   import { onMount } from "svelte";
   import APOD from "../components/APOD.svelte";
+  import IconButton from "../components/IconButton.svelte";
 
-  let apods: Promise<Apod[]>;
+  let apodsPromise: Promise<Apod[]>;
+  let index = 0;
 
   onMount(() => {
-    apods = fetchLatestApods();
+    apodsPromise = fetchLatestApods();
   });
+
+  function next() {
+    index = (index + 1) % 7;
+  }
+
+  function back() {
+    const newIndex = index - 1;
+
+    if (newIndex < 0) {
+      index = 6;
+    } else {
+      index = newIndex;
+    }
+  }
 </script>
 
 <svelte:head>
-  <title>Accueil - NASA APOD</title>
+  <title>Home - NASA APOD</title>
 </svelte:head>
 
-<Title text="Dernières APODs" />
-{#if apods}
-  {#await apods}
+<Title text="Latest APODs" />
+{#if apodsPromise}
+  {#await apodsPromise}
     <div class="w-full py-2 flex justify-center items-center">
       <Spinner />
     </div>
-  {:then results}
-    <ul class="grid grid-cols-3">
-      {#each results as apod}
-        <li><APOD {apod} /></li>
-      {/each}
-    </ul>
+  {:then apods}
+    <div class="flex flex-col md:flex-row">
+      <IconButton icon="arrow_back_ios" on:click={back} />
+      <APOD apod={apods[index]} />
+      <IconButton icon="arrow_forward_ios" on:click={next} />
+    </div>
   {/await}
 {/if}
