@@ -44,5 +44,7 @@
       <APOD apod={apods[index]} />
       <IconButton icon="arrow_forward_ios" on:click={next} />
     </div>
+  {:catch err}
+    <p class="text-center text-lg py-2 text-red-600">{err}</p>
   {/await}
 {/if}
