@@ -11,12 +11,13 @@ export type Apod = {
 };
 
 function formatDate(date: Date) {
-  const month = `${
+  const day =
+    date.getDate() < 10 ? `0${date.getDate()}` : date.getDate().toString();
+  const month =
     date.getMonth() + 1 < 10
       ? `0${date.getMonth() + 1}`
-      : `${date.getMonth() + 1}`
-  }`;
-  return `${date.getFullYear()}-${month}-${date.getDate()}`;
+      : `${date.getMonth() + 1}`;
+  return `${date.getFullYear()}-${month}-${day}`;
 }
 
 export async function fetchLatestApods(): Promise<Apod[]> {
