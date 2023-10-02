@@ -1,20 +1,23 @@
 <script lang="ts">
   import type { Apod } from "$lib/apod";
-  import Button from "./Button.svelte";
-  import Link from "./Link.svelte";
+  import IconButton from "./IconButton.svelte";
 
   export let apod: Apod;
   let showDetails = false;
 
   $: formattedDate = new Date(apod.date);
+
+  function toggleDetails() {
+    showDetails = !showDetails;
+  }
 </script>
 
 <div class="p-10 m-4 shadow-xl rounded-lg w-full">
   <h2 class="text-3xl py-2">{apod.title}</h2>
   <p class="text-lg py-2">{formattedDate.toDateString()}</p>
-  <Button
-    text={showDetails ? "Hide details" : "Show details"}
-    on:click={() => (showDetails = !showDetails)}
+  <IconButton
+    icon={showDetails ? "expand_less" : "expand_more"}
+    on:click={toggleDetails}
   />
   {#if showDetails}
     <p
