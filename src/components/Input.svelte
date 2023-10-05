@@ -1,10 +1,13 @@
 <script lang="ts">
-    export let text: string;
-    export let type: string;
-    export let id: string;
-  </script>
+  export let id: string;
+  export let type: string;
+  export let title: string;
+</script>
 
-<label for="{text}" class="block text-base font-medium leading-6 text-gray-900">{text}</label>
-<div class="mt-2">
-    <input type="{type}" name="{id}" id="{id}" autocomplete="given-name" class="w-full p-3 outline-none border-2 border-gray-200 rounded-md focus:border-blue-500">
-</div>
+<label for={id} class="py-2">{title}</label>
+<input
+  {type}
+  name={id}
+  {id}
+  class="p-3 my-2 outline-none border-2 border-gray-200 rounded-md focus:border-blue-500"
+/>
