@@ -1,8 +1,8 @@
 <script lang="ts">
   import { signUp } from "$lib/auth";
-  import Button from "../../components/Button.svelte";
-  import Input from "../../components/Input.svelte";
-  import Title from "../../components/Title.svelte";
+  import Button from "$lib/components/Button.svelte";
+  import Input from "$lib/components/Input.svelte";
+  import Title from "$lib/components/Title.svelte";
 
   let errorMessage = "";
 

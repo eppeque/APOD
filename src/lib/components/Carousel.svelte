@@ -7,14 +7,14 @@
   let index = 0;
 
   function next() {
-    index = (index + 1) % 7;
+    index = (index + 1) % apods.length;
   }
 
   function back() {
     const newIndex = index - 1;
 
     if (newIndex < 0) {
-      index = 6;
+      index = apods.length + newIndex;
     } else {
       index = newIndex;
     }
