@@ -23,7 +23,7 @@ function formatDate(date: Date) {
 export async function fetchLatestApods(): Promise<Apod[]> {
   const now = new Date();
   const start = new Date();
-  start.setDate(now.getDate() - 6);
+  start.setDate(now.getDate() - 7);
 
   const res = await fetch(
     `${BASE_URL}/apod?start_date=${formatDate(start)}&end_date=${formatDate(
