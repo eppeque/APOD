@@ -32,5 +32,65 @@ export async function signUp(
     throw new Error("The password is different than its confirmation");
   }
 
-  // Register user with the API...
+  const signup = await fetch('https://spacelab.henni.be/user/signup', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      firstname: user.firstName,
+      lastname: user.lastName,
+      country : user.country,
+      email : user.email,
+      password : password
+    })
+  });
+
+  if (!signup.ok) {
+    throw new Error('Failed to register user');
+  }
+
+  const signIn = await fetch('https://spacelab.henni.be/user/signin', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      email : user.email,
+      password : password
+    })
+  });
+
+  const signinData = await signIn.json();
+
+  return signinData;
+}
+
+export async function signIn(email: string, password: string) {
+  if (email.trim() === "" || password.trim() === "") {
+    throw new Error("Please fill all required fields");
+  }
+
+  if (!re.test(email)) {
+    throw new Error("The format of the email address is not valid");
+  }
+
+  const signIn = await fetch('https://spacelab.henni.be/user/signin', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      email : email,
+      password : password
+    })
+  });
+
+  if (!signIn.ok) {
+    throw new Error('Email or password wrong.');
+  }
+
+  const signinData = await signIn.json();
+
+  return signinData;
 }
