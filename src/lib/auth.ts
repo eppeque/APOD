@@ -63,6 +63,8 @@ export async function signUp(
 
   const signinData = await signIn.json();
 
+  console.log(signinData);
+
   return signinData;
 }
 
@@ -91,6 +93,8 @@ export async function signIn(email: string, password: string) {
   }
 
   const signinData = await signIn.json();
+
+  console.log(signinData);
 
   return signinData;
 }
