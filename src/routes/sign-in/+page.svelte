@@ -1,10 +1,21 @@
 <script lang="ts">
-  import { signIn } from "$lib/auth";
+  import { signIn, userToken } from "$lib/auth";
   import Input from "$lib/components/Input.svelte";
   import Title from "$lib/components/Title.svelte";
   import Button from "$lib/components/Button.svelte";
+  import { goto } from "$app/navigation";
+  import { base } from "$app/paths";
+  import { onMount } from "svelte";
 
   let errorMessage = "";
+
+  onMount(() => {
+    userToken.subscribe((token) => {
+      if (token !== null) {
+        goto(base);
+      }
+    });
+  });
 
   async function handleSumbit(e: SubmitEvent) {
     const data = new FormData(e.target as HTMLFormElement);
@@ -16,10 +27,7 @@
     errorMessage = "";
 
     try {
-      await signIn(
-        email,
-        password
-      );
+      await signIn(email, password);
     } catch (e: any) {
       errorMessage = e.message;
     }
@@ -41,6 +49,6 @@
   <Input title="Email" type="email" id="email" />
   <Input title="Password" type="password" id="password" />
 
-<div class="h-10" />
-<Button text="Connect" />
+  <div class="h-10" />
+  <Button text="Connect" />
 </form>

@@ -1,18 +1,29 @@
 <script lang="ts">
-  import { signUp } from "$lib/auth";
+  import { goto } from "$app/navigation";
+  import { base } from "$app/paths";
+  import { signUp, userToken } from "$lib/auth";
   import Button from "$lib/components/Button.svelte";
   import Input from "$lib/components/Input.svelte";
   import Title from "$lib/components/Title.svelte";
   import { countries } from "$lib/countries";
+  import { onMount } from "svelte";
 
   let errorMessage = "";
+
+  onMount(() => {
+    userToken.subscribe((token) => {
+      if (token !== null) {
+        goto(base);
+      }
+    });
+  });
 
   async function handleSumbit(e: SubmitEvent) {
     const data = new FormData(e.target as HTMLFormElement);
     const entries = Object.fromEntries(data.entries());
 
-    const firstName = entries.firstName as string;
-    const lastName = entries.lastName as string;
+    const firstname = entries.firstName as string;
+    const lastname = entries.lastName as string;
     const email = entries.email as string;
     const password = entries.password as string;
     const passwordConfirm = entries.passwordConfirm as string;
@@ -22,7 +33,7 @@
 
     try {
       await signUp(
-        { firstName, lastName, email, country },
+        { firstname, lastname, email, country },
         password,
         passwordConfirm
       );
