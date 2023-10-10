@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-  <title>Sign Up - NASA APOD</title>
+  <title>My collection - NASA APOD</title>
 </svelte:head>
 
 <Title text="My APOD collection" />

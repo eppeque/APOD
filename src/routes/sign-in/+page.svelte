@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { signIn, userToken } from "$lib/auth";
+  import { signIn, user } from "$lib/auth";
   import Input from "$lib/components/Input.svelte";
   import Title from "$lib/components/Title.svelte";
   import Button from "$lib/components/Button.svelte";
@@ -10,7 +10,7 @@
   let errorMessage = "";
 
   onMount(() => {
-    userToken.subscribe((token) => {
+    user.subscribe((token) => {
       if (token !== null) {
         goto(base);
       }

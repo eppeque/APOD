@@ -37,3 +37,21 @@ export async function fetchLatestApods(): Promise<Apod[]> {
 
   throw Error("Couldn't fetch from API");
 }
+
+export async function fetchApods(): Promise<Apod[]> {
+  const now = new Date();
+  const start = new Date();
+  start.setDate(now.getDate() - 32);
+
+  const res = await fetch(
+    `${BASE_URL}/apod?start_date=${formatDate(start)}&end_date=${formatDate(
+      now
+    )}`
+  );
+
+  if (res.ok) {
+    return await res.json();
+  }
+
+  throw Error("Couldn't fetch from API");
+}

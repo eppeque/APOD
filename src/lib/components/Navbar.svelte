@@ -1,6 +1,6 @@
 <script>
   import { base } from "$app/paths";
-  import { userToken, signOut } from "$lib/auth";
+  import { user, signOut } from "$lib/auth";
   import Button from "./Button.svelte";
   import Navlink from "./Navlink.svelte";
 </script>
@@ -10,7 +10,7 @@
 
   <ul class="flex gap-10 items-center">
     <Navlink text="Home" url={base} />
-    {#if $userToken === null}
+    {#if $user === null}
       <Navlink text="Sign In" url="{base}/sign-in" />
       <li>
         <a
@@ -20,6 +20,8 @@
         >
       </li>
     {:else}
+      <Navlink text="Catalog" url="{base}/catalog" />
+      <Navlink text="My collection" url="{base}/my-collection" />
       <Button text="Sign out" on:click={signOut} />
     {/if}
   </ul>

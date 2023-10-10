@@ -1,13 +1,15 @@
 import { writable } from "svelte/store";
 
 export interface User {
+  id: string;
   firstname: string;
   lastname: string;
   email: string;
   country: string;
 }
 
-export const userToken = writable<string | null>(null);
+export const user = writable<User | null>(null);
+export const token = writable<string | null>(null);
 
 const re =
   /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
@@ -82,20 +84,26 @@ export async function signIn(email: string, password: string): Promise<void> {
   }
 
   const authData = await res.json();
-  userToken.set(authData.token);
-  saveAuth(authData.token);
+  user.set(authData.user as User);
+  token.set(authData.token);
+  saveAuth(authData.user as User, authData.token);
 }
 
 export function signOut() {
-  userToken.set(null);
+  user.set(null);
   sessionStorage.clear();
 }
 
 export function loadAuth() {
-  const c = sessionStorage.getItem("token");
-  userToken.set(c);
+  const c = sessionStorage.getItem("user");
+  const t = sessionStorage.getItem("token");
+  if(c) {
+    user.set(JSON.parse(c) as User);
+    token.set(t);
+  }
 }
 
-function saveAuth(token: string) {
-  sessionStorage.setItem("token", token);
+function saveAuth(user: User, token: string) {
+  sessionStorage.setItem("user", JSON.stringify(user));
+  sessionStorage.setItem("token", token.toString());
 }
