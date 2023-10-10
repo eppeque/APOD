@@ -46,8 +46,8 @@
   class="p-10 shadow-xl rounded-lg flex flex-col my-4"
   on:submit|preventDefault={handleSumbit}
 >
-  <Input title="Email" type="email" id="email" />
-  <Input title="Password" type="password" id="password" />
+  <Input title="Email" type="email" id="email" isRequired />
+  <Input title="Password" type="password" id="password" isRequired />
 
   <div class="h-10" />
   <Button text="Connect" />

@@ -71,11 +71,10 @@
     name="country"
     autocomplete="country-name"
     class="p-3 my-2 outline-none border-2 border-gray-200 rounded-md focus:border-blue-500"
-    required
   >
-    <option value="">Select a country</option>
+    <option value="US">United States</option>
     {#each countries as country}
-      <option value={country}>{country}</option>
+      <option value={country.code}>{country.name}</option>
     {/each}
   </select>
   <div class="h-10" />
