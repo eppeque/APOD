@@ -42,7 +42,7 @@
 
     try {
       await signUp(
-        { id: "", firstname, lastname, email, country },
+        { id: "", firstname, lastname, email, country, apods: [] },
         password,
         passwordConfirm
       );

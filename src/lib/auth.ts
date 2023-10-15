@@ -1,5 +1,4 @@
 import { get, writable } from "svelte/store";
-import type { Apod } from "./apod";
 
 export interface User {
   id: string;
