@@ -1,4 +1,5 @@
-import { writable } from "svelte/store";
+import { get, writable } from "svelte/store";
+import type { Apod } from "./apod";
 
 export interface User {
   id: string;
@@ -6,6 +7,7 @@ export interface User {
   lastname: string;
   email: string;
   country: string;
+  apods: string[];
 }
 
 export const user = writable<User | null>(null);
@@ -86,24 +88,48 @@ export async function signIn(email: string, password: string): Promise<void> {
   const authData = await res.json();
   user.set(authData.user as User);
   token.set(authData.token);
-  saveAuth(authData.user as User, authData.token);
 }
 
 export function signOut() {
   user.set(null);
+  token.set(null);
   sessionStorage.clear();
 }
 
 export function loadAuth() {
   const c = sessionStorage.getItem("user");
   const t = sessionStorage.getItem("token");
-  if(c) {
+  if (c) {
     user.set(JSON.parse(c) as User);
     token.set(t);
   }
 }
 
-function saveAuth(user: User, token: string) {
-  sessionStorage.setItem("user", JSON.stringify(user));
-  sessionStorage.setItem("token", token.toString());
+export function addToCollection(apodId: string) {
+  user.update((value) => {
+    value!.apods.push(apodId);
+    return value;
+  });
+
+  saveAuth();
+}
+
+export function removeFromCollection(apodId: string) {
+  user.update((value) => {
+    if (!value) return value;
+
+    value.apods = value.apods.filter((apod) => apod !== apodId);
+
+    return value;
+  });
+
+  saveAuth();
+}
+
+function saveAuth() {
+  const userValue = get(user)!;
+  const tokenValue = get(token)!;
+
+  sessionStorage.setItem("user", JSON.stringify(userValue));
+  sessionStorage.setItem("token", tokenValue);
 }

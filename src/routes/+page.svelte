@@ -2,13 +2,17 @@
   import Title from "$lib/components/Title.svelte";
   import Spinner from "$lib/components/Spinner.svelte";
   import { fetchLatestApods, type Apod } from "$lib/apod";
-  import { onMount } from "svelte";
+  import { onMount, setContext } from "svelte";
   import Carousel from "$lib/components/Carousel.svelte";
+  import { createLikeStore, updateLikes } from "$lib/likes";
 
   let apodsPromise: Promise<Apod[]>;
+  let likes = createLikeStore();
+  setContext("likes", likes);
 
-  onMount(() => {
+  onMount(async () => {
     apodsPromise = fetchLatestApods();
+    await updateLikes(await apodsPromise, likes);
   });
 </script>
 

@@ -1,6 +1,6 @@
 const BASE_URL = "https://spacelab.henni.be";
 
-export type Apod = {
+export interface Apod {
   date: string;
   title: string;
   explanation: string;
@@ -8,9 +8,9 @@ export type Apod = {
   hdUrl: string;
   media_type: string;
   likes: number;
-};
+}
 
-function formatDate(date: Date) {
+function formatDate(date: Date): string {
   const day =
     date.getDate() < 10 ? `0${date.getDate()}` : date.getDate().toString();
   const month =
@@ -23,7 +23,7 @@ function formatDate(date: Date) {
 export async function fetchLatestApods(): Promise<Apod[]> {
   const now = new Date();
   const start = new Date();
-  start.setDate(now.getDate() - 7);
+  start.setDate(now.getDate() - (now.getHours() < 12 ? 7 : 6));
 
   const res = await fetch(
     `${BASE_URL}/apod?start_date=${formatDate(start)}&end_date=${formatDate(
@@ -41,7 +41,7 @@ export async function fetchLatestApods(): Promise<Apod[]> {
 export async function fetchApods(): Promise<Apod[]> {
   const now = new Date();
   const start = new Date();
-  start.setDate(now.getDate() - 32);
+  start.setDate(now.getDate() - (now.getHours() < 12 ? 31 : 30));
 
   const res = await fetch(
     `${BASE_URL}/apod?start_date=${formatDate(start)}&end_date=${formatDate(

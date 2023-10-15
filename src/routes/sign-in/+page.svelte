@@ -5,16 +5,24 @@
   import Button from "$lib/components/Button.svelte";
   import { goto } from "$app/navigation";
   import { base } from "$app/paths";
-  import { onMount } from "svelte";
+  import { onDestroy, onMount } from "svelte";
+  import type { Unsubscriber } from "svelte/store";
 
   let errorMessage = "";
+  let unsubscribe: Unsubscriber;
 
   onMount(() => {
-    user.subscribe((token) => {
-      if (token !== null) {
+    unsubscribe = user.subscribe((value) => {
+      if (value !== null) {
         goto(base);
       }
     });
+  });
+
+  onDestroy(() => {
+    if (unsubscribe) {
+      unsubscribe();
+    }
   });
 
   async function handleSumbit(e: SubmitEvent) {
@@ -50,5 +58,5 @@
   <Input title="Password" type="password" id="password" isRequired />
 
   <div class="h-10" />
-  <Button text="Connect" />
+  <Button text="Sign In" />
 </form>
