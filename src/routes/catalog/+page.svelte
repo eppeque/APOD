@@ -2,7 +2,7 @@
   import Title from "$lib/components/Title.svelte";
   import type { Apod } from "$lib/apod";
   import { onMount, setContext } from "svelte";
-  import { fetchApods, fetchLatestApods } from "$lib/apod";
+  import { fetchApods } from "$lib/apod";
   import Spinner from "$lib/components/Spinner.svelte";
   import { createLikeStore, updateLikes } from "$lib/likes";
   import Carousel from "$lib/components/Carousel.svelte";
