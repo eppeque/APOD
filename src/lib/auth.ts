@@ -87,6 +87,7 @@ export async function signIn(email: string, password: string): Promise<void> {
   const authData = await res.json();
   user.set(authData.user as User);
   token.set(authData.token);
+  saveAuth();
 }
 
 export function signOut() {
