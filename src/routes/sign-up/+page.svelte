@@ -6,25 +6,18 @@
   import Input from "$lib/components/Input.svelte";
   import Title from "$lib/components/Title.svelte";
   import { countries } from "$lib/countries";
-  import { onDestroy, onMount } from "svelte";
-  import type { Unsubscriber } from "svelte/store";
+  import { onMount } from "svelte";
 
   let errorMessage = "";
-  let unsubscribe: Unsubscriber;
 
   onMount(() => {
-    unsubscribe = user.subscribe((value) => {
+    const unsubscribe = user.subscribe((value) => {
       if (value !== null) {
         goto(base);
       }
     });
-  });
 
-  onDestroy(() => {
-    if (unsubscribe) {
-      unsubscribe();
-      console.log("Unsubscribed!");
-    }
+    return unsubscribe;
   });
 
   async function handleSumbit(e: SubmitEvent) {

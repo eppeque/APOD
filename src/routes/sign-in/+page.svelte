@@ -5,24 +5,18 @@
   import Button from "$lib/components/Button.svelte";
   import { goto } from "$app/navigation";
   import { base } from "$app/paths";
-  import { onDestroy, onMount } from "svelte";
-  import type { Unsubscriber } from "svelte/store";
+  import { onMount } from "svelte";
 
   let errorMessage = "";
-  let unsubscribe: Unsubscriber;
 
   onMount(() => {
-    unsubscribe = user.subscribe((value) => {
+    const unsubscribe = user.subscribe((value) => {
       if (value !== null) {
         goto(base);
       }
     });
-  });
 
-  onDestroy(() => {
-    if (unsubscribe) {
-      unsubscribe();
-    }
+    return unsubscribe;
   });
 
   async function handleSumbit(e: SubmitEvent) {
