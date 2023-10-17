@@ -59,9 +59,7 @@
     mediaUrl={apod.url}
     {likesCount}
     {isLiked}
-    on:like={() => {
-      isLiked ? unlike() : like();
-    }}
+    on:like={() => (isLiked ? unlike() : like())}
   />
   <IconButton icon="arrow_forward_ios" on:click={next} />
 </div>

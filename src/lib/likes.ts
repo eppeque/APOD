@@ -24,6 +24,7 @@ export interface LikeStore {
   like: (apodId: string) => Promise<void>;
   unlike: (apodId: string) => Promise<void>;
   insert: (apodId: string, likeStatus: LikeStatus) => void;
+  clear: () => void;
 }
 
 export function createLikeStore(): LikeStore {
@@ -66,18 +67,22 @@ export function createLikeStore(): LikeStore {
         return map;
       });
     },
+    clear: () => {
+      update((map) => {
+        map.clear();
+        return map;
+      });
+    },
   };
 }
 
 export async function updateLikes(apods: Apod[], store: LikeStore) {
+  store.clear();
   const collection = get(user)?.apods;
 
   if (collection) {
     for (const apodId of collection) {
       const likesCount = await getLikes(apodId);
-      console.log(
-        `Inserting ${apodId} -> {likes: ${likesCount}, isLiked: true}`
-      );
       store.insert(apodId, { likes: likesCount, isLiked: true });
     }
   }
