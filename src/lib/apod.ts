@@ -55,3 +55,13 @@ export async function fetchApods(): Promise<Apod[]> {
 
   throw Error("Couldn't fetch from API");
 }
+
+export async function fetchApod(id: string): Promise<Apod> {
+  const res = await fetch(`${BASE_URL}/apod/${id}`);
+
+  if (res.ok) {
+    return await res.json();
+  }
+
+  throw Error("Couldn't fetch from API");
+}
