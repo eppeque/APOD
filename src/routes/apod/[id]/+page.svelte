@@ -25,6 +25,6 @@
   subtitle={apod.date}
   body={apod.explanation}
   mediaUrl={apod.url}
-  likesCount={$likes.get(apod.date)?.likes ?? 0}
-  isLiked={$likes.get(apod.date)?.isLiked ?? false}
+  {likesCount}
+  {isLiked}
 />
